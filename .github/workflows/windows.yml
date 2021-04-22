@@ -34,18 +34,12 @@ jobs:
           cd build
           cmake ../
           msbuild main.sln -property:Configuration=Release
-          ls
-          ls Release
-          echo Add other actions to build,
-          echo test, and deploy your project.
-      - name: Upload files to a GitHub release
-        run: |
-          ls Release/main.exe
-        uses: svenstaro/upload-release-action@2.2.1
-        with: 
-          repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: Release/main.exe
-          tag: ${{ github.ref }}
-          overwrite: true
-          body: "This is my release text"
-        
+          cd Release
+      - uses: "marvinpinto/action-automatic-releases@latest"
+        with:
+          repo_token: "${{ secrets.GITHUB_TOKEN }}"
+          automatic_release_tag: "latest"
+          prerelease: true
+          title: "Development Build"
+          files: |
+            main.exe
