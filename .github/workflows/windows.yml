@@ -34,12 +34,8 @@ jobs:
           cd build
           cmake ../
           msbuild main.sln -property:Configuration=Release
-          cd Release
-      - uses: "marvinpinto/action-automatic-releases@latest"
+      - name: pre release
+        uses: actions/upload-artifact@v2
         with:
-          repo_token: "${{ secrets.GITHUB_TOKEN }}"
-          automatic_release_tag: "latest"
-          prerelease: true
-          title: "Development Build"
-          files: |
-            main.exe
+           name: my-artifact
+           path: Release/
